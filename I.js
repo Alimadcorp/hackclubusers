@@ -1,5 +1,27 @@
 // pages/api/cors-handler.js
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCKLZKLkE_tk08pGFPae6LQp04aCi6Ekzw",
+    authDomain: "catstatus-a6168.firebaseapp.com",
+    projectId: "catstatus-a6168",
+    storageBucket: "catstatus-a6168.firebasestorage.app",
+    messagingSenderId: "42492605742",
+    appId: "1:42492605742:web:bf10ff3b37fa41324a76bf",
+    measurementId: "G-TLEHM0GFGP"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 import Cors from 'cors';
 
 // Initialize the CORS middleware
