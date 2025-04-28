@@ -1,103 +1,753 @@
-<!doctype html>
-<html lang=en>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta property="og:title" content=Hackclub Stats>
-<meta property="og:site_name" content=Hackclub Slack Statistics>
-<meta property="og:url" content=https://alimadcorp.github.io/hackclubusers>
-<meta property="og:description" content=View statistics of the hackclub slack, most used usernames and view the selected user of the day. >
-<meta property="og:type" content=website>
-<meta property="og:image" content=https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Hack_Club_Flag_Standalone.svg/1200px-Hack_Club_Flag_Standalone.svg.png>
-<meta charset=UTF-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>HackClub Slack Statistics</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel=stylesheet>
-<style>:root{--bg-dark:#0b0f14;--bg-card:#161b22;--border:#30363d;--primary:#58a6ff;--secondary:#79c0ff;--text:#d0d7de;--text-light:#8b949e;--accent:#1f6feb}body{background:var(--bg-dark);color:var(--text);font-family:Inter,sans-serif;padding:20px;max-width:1200px;margin:0 auto}header{text-align:center;margin-bottom:30px}h1{color:var(--secondary);font-size:2.5rem;margin-bottom:10px;font-weight:700}.subtitle{color:var(--text-light);margin-bottom:30px;font-size:1.1rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px;margin-bottom:40px}.card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:25px;box-shadow:0 4px 20px rgba(0,0,0,.15);transition:transform .2s,box-shadow .2s}.card:hover{transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,0,0,.2)}.user-card{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:40px;background:linear-gradient(135deg,#161b22 0,#1a2635 100%);border:1px solid var(--accent)}.user-card h2{margin-top:15px;color:var(--primary)}.user-card img{width:120px;height:120px;border-radius:50%;border:4px solid var(--accent);object-fit:cover;margin-bottom:15px;box-shadow:0 4px 15px rgba(31,111,235,.3)}.color-badge{width:10px;display:none;height:10px;border-radius:50%;margin:15px auto;border:3px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.2)}.user-stats{width:100%;margin-top:15px}.user-stats p{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);margin:0}.user-stats p:last-child{border-bottom:none}.user-stats strong{color:var(--primary)}.user-status{display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 0}.user-status-emoji{width:24px;height:24px;object-fit:contain}h2{color:var(--primary);font-size:1.5rem;margin-top:0;margin-bottom:20px;font-weight:600}.table-container{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:15px}table{width:auto;min-width:100%;border-collapse:collapse;margin-top:15px;font-size:14px;white-space:nowrap}td,th{padding:10px 15px;border:1px solid var(--border);text-align:left}th{background-color:rgba(31,111,235,.1);color:var(--primary);font-weight:500}tr:nth-child(2n){background-color:rgba(13,17,23,.5)}tr:hover{background-color:rgba(31,111,235,.1)}td.emoji-cell{display:flex;align-items:center;gap:8px}.emoji-img{width:24px;height:24px;object-fit:contain}.rank{font-weight:600;color:var(--primary)}.average-color{display:flex;flex-direction:column;align-items:center;margin-top:15px}.average-color-box{width:100px;height:100px;border-radius:12px;border:2px solid var(--border);margin-bottom:10px;box-shadow:0 4px 15px rgba(0,0,0,.2)}.footer{text-align:center;margin-top:50px;padding-top:20px;border-top:1px solid var(--border);color:var(--text-light);font-size:.9rem}.last-sync{text-align:center;margin-top:30px;color:var(--text-light);font-size:.9rem}@media (max-width:768px){.grid{grid-template-columns:1fr}h1{font-size:2rem}.user-card img{width:100px;height:100px}}.comment-section{width:100%;max-width:600px;margin:0 auto;background-color:#fff;padding:20px;border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,.1)}.comment-form{display:flex;flex-direction:column;gap:10px}textarea{width:100%;padding:10px;font-size:1rem;border:1px solid #ddd;border-radius:5px;resize:vertical}.submit-btn{padding:10px;background-color:#4caf50;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:1rem}.submit-btn:hover{background-color:#45a049}.comments-container{margin-top:30px}.comment{background-color:#fafafa;padding:15px;margin-bottom:15px;border-radius:5px;border-left:5px solid #4caf50;font-size:1rem}.comment .username{font-weight:700;color:#333}.comment .text{margin-top:5px;color:#555}@media (max-width:768px){.comment-section{padding:15px}h1{font-size:1.5rem}.submit-btn{font-size:.9rem}}@media (prefers-color-scheme:dark){body{background-color:#121212;color:#e0e0e0;font-size:14px}input,textarea{background-color:#1e1e1e;color:#e0e0e0;border:1px solid #333;font-size:13px;width:100vw;padding:8px}.comment{background-color:#1a1a1a;padding:10px;margin-bottom:10px;font-size:13px width: 95vw}.comment .username{color:#8ab4f8;font-size:12px}.comment .timestamp{color:#666;font-size:11px}.submit-btn{background-color:#333;color:#fff;padding:8px 12px;font-size:13px;width:100vw}.comments-container{max-height:300px}}</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HackClub Slack Statistics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+    --bg-dark: #0b0f14;
+    --bg-card: #161b22;
+    --border: #30363d;
+    --primary: #58a6ff;
+    --secondary: #79c0ff;
+    --text: #d0d7de;
+    --text-light: #8b949e;
+    --accent: #1f6feb;
+  }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: var(--text-light);
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .user-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 40px;
+      background: linear-gradient(135deg, #161b22 0%, #1a2635 100%);
+      border: 1px solid var(--accent);
+    }
+
+    .user-card h2 {
+      margin-top: 15px;
+      color: var(--primary);
+    }
+
+    .user-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid var(--accent);
+      object-fit: cover;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 15px rgba(31, 111, 235, 0.3);
+    }
+
+    .color-badge {
+      width: 10px;
+      display: none;
+      height: 10px;
+      border-radius: 50%;
+      margin: 15px auto;
+      border: 3px solid var(--border);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .user-stats {
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .user-stats p {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      margin: 0;
+    }
+
+    .user-stats p:last-child {
+      border-bottom: none;
+    }
+
+    .user-stats strong {
+      color: var(--primary);
+    }
+
+    .user-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .user-status-emoji {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    h2 {
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 15px;
+    }
+
+    table {
+      width: auto;
+      min-width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    th, td {
+      padding: 10px 15px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    th {
+      background-color: rgba(31, 111, 235, 0.1);
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(13, 17, 23, 0.5);
+    }
+
+    tr:hover {
+      background-color: rgba(31, 111, 235, 0.1);
+    }
+
+    td.emoji-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .emoji-img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    .rank {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .average-color {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 15px;
+    }
+
+    .average-color-box {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      margin-bottom: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .last-sync {
+      text-align: center;
+      margin-top: 30px;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+@media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .user-card img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .comment-section {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .comment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .submit-btn:hover {
+      background-color: #45a049;
+    }
+
+    /* Comments Container */
+    .comments-container {
+      margin-top: 30px;
+    }
+
+    .comment {
+      background-color: #fafafa;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border-left: 5px solid #4CAF50;
+      font-size: 1rem;
+    }
+
+    .comment .username {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .comment .text {
+      margin-top: 5px;
+      color: #555;
+    }
+
+    /* Mobile Responsiveness */
+@media (max-width: 768px) {
+      .comment-section {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .submit-btn {
+        font-size: 0.9rem;
+      }
+    }
+    /* Minimal Dark Mode Overrides */
+
+  input,
+  textarea {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #333;
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .comment {
+    background-color: #1a1a1a;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+
+  .comment .username {
+    color: #8ab4f8;
+    font-size: 12px;
+  }
+
+  .comment .timestamp {
+    color: #666;
+    font-size: 11px;
+  }
+
+  .submit-btn {
+    background-color: #333;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .comments-container {
+    max-height: 300px;
+  }
+}
+  </style>
 </head>
 <body>
-<header>
-<h1>HackClub Slack Statistics</h1>
-<p class=subtitle>
-Powered by Alimad Surveillance
-</p>
-<div class="card user-card">
-<h2>User of the Day</h2>
-<div id=userCard>
-Loading...
-</div>
-</div>
-</header>
-<div id=content>
-Loading...
-</div>
-<h1>Comment Section</h1>
-<section class=comment-section>
-<div class=username-section>
-<label for=username>Your Username:</label>
-<input id=username placeholder=Anonymous>
-</div>
-<div class=comment-form>
-<textarea id=comment placeholder="Write your comment..." rows=5></textarea>
-<button id=submitComment class=submit-btn>Submit Comment</button>
-</div>
-<div id=commentsContainer class=comments-container>
+
+  <header>
+    <h1>HackClub Slack Statistics</h1>
+    <p class="subtitle">
+      Powered by Alimad Surveillance
+    </p>
+
+    <div class="card user-card">
+      <h2>User of the Day</h2>
+      <div id="userCard">
+        Loading...
+      </div>
+    </div>
+  </header>
+
+  <div id="content">
+    Loading...
+  </div>
+  <h1>Comments</h1>
+  <section class="comment-section">
+    <!-- Username input -->
+    <div class="username-section">
+      <label for="username">Your Username:</label>
+      <input id="username" type="text" placeholder="Anonymous" />
+    </div>
+
+    <div class="comment-form">
+      <textarea id="comment" placeholder="Write your comment..." rows="5"></textarea>
+      <button id="submitComment" class="submit-btn">Submit Comment</button>
+    </div>
+
+    <div id="commentsContainer" class="comments-container">
+      <!-- Comments will be dynamically added here -->
+    </div>
+  </section>
+
 </div>
 </section>
-<div class=last-sync id=lastSync></div>
-<div class=footer>
+<div class="last-sync" id="lastSync"></div>
+
+<div class="footer">
 Made with by Muhammad Ali
 </div>
-<script>async function main(){let t=await fetch("https://slackinhackin.vercel.app/api/stats"),e=await t.json(),s=document.getElementById("content");s.innerHTML="";let n=(t,e)=>`<div class="card"><h2>${t}</h2>${e}</div>`,r=(t,s="Key",n="Count",r=!1)=>{let a=t.sort((t,e)=>e[1]-t[1]).slice(0,10),o=a.map(([t,s],n)=>{if(r){let a=t.replace(/^:|:$/g,""),o=e.emoji_urls[t];return`
+
+<script>
+async function main() {
+const res = await fetch('https://slackinhackin.vercel.app/api/stats');
+let data = await res.json();
+//data = JSON.parse(data.body);
+const el = document.getElementById('content');
+el.innerHTML = '';
+
+const addSection = (title, tableHtml) => {
+return `<div class="card"><h2>${title}</h2>${tableHtml}</div>`;
+};
+
+const makeTable = (entries, keyLabel = 'Key', valueLabel = 'Count', emoji = false) => {
+const top10 = entries.sort((a, b) => b[1]-a[1]).slice(0, 10);
+const rows = top10.map(([k, v], i) => {
+if (emoji) {
+const emojiKey = k.replace(/^:|:$/g, '');
+const emojiUrl = data.emoji_urls[k];
+return `
 <tr>
-<td class="rank">#${n+1}</td>
+<td class="rank">#${i+1}</td>
 <td class="emoji-cell">
-${o?`<img src="${o}" alt="${a}" class="emoji-img">`:""}
-${a}
+${emojiUrl ? `<img src="${emojiUrl}" alt="${emojiKey}" class="emoji-img">`: ''}
+${emojiKey}
 </td>
-<td>${s}</td>
+<td>${v}</td>
 </tr>
-`}return`<tr><td class="rank">#${n+1}</td><td>${t}</td><td>${s}</td></tr>`}).join("");return`<div class="table-container"><table><thead><tr><th>Rank</th><th>${s}</th><th>${n}</th></tr></thead><tbody>${o}</tbody></table></div>`},a=[n("General Stats",`
+`;
+}
+return `<tr><td class="rank">#${i+1}</td><td>${k}</td><td>${v}</td></tr>`;
+}).join('');
+return `<div class="table-container"><table><thead><tr><th>Rank</th><th>${keyLabel}</th><th>${valueLabel}</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+};
+
+const sections = [
+addSection('General Stats',
+`
 <table>
 <tbody>
-<tr><td>Total Users</td><td>${e.sum}</td></tr>
-<tr><td>Deleted Accounts</td><td>${e.deleted}</td></tr>
-<tr><td>Set Statuses</td><td>${e.set_status}</td></tr>
-<tr><td>Bots</td><td>${e.bots}</td></tr>
-<tr><td>Emails</td><td>${e.emails}</td></tr>
-<tr><td>Phone Numbers</td><td>${e.phone}</td></tr>
-<tr><td>Skype Accounts</td><td>${e.skype}</td></tr>
-<tr><td>Titles</td><td>${e.title}</td></tr>
+<tr><td>Total Users</td><td>${data.sum}</td></tr>
+<tr><td>Deleted Accounts</td><td>${data.deleted}</td></tr>
+<tr><td>Set Statuses</td><td>${data.set_status}</td></tr>
+<tr><td>Bots</td><td>${data.bots}</td></tr>
+<tr><td>Emails</td><td>${data.emails}</td></tr>
+<tr><td>Phone Numbers</td><td>${data.phone}</td></tr>
+<tr><td>Skype Accounts</td><td>${data.skype}</td></tr>
+<tr><td>Titles</td><td>${data.title}</td></tr>
 </tbody>
 </table>
-`),n("Top Status Emojis",r(Object.entries(e.status_emoji),"Emoji","Count",!0)),n("Popular Names",r(Object.entries(e.namez))),n("Pronouns Used",r(Object.entries(e.prons))),n("Top Timezones",r(Object.entries(e.tz)))],o=`rgb(${e.tot_color.r}, ${e.tot_color.g}, ${e.tot_color.b})`;a.push(`
+`),
+addSection('Top Status Emojis',
+makeTable(Object.entries(data.status_emoji), 'Emoji', 'Count', true)),
+addSection('Popular Names',
+makeTable(Object.entries(data.namez))),
+addSection('Pronouns Used',
+makeTable(Object.entries(data.prons))),
+addSection('Top Timezones',
+makeTable(Object.entries(data.tz)))
+];
+
+const color = `rgb(${data.tot_color.r}, ${data.tot_color.g}, ${data.tot_color.b})`;
+sections.push(`
 <div class="card">
 <h2>Average Profile Color</h2>
 <div class="average-color">
-<div class="average-color-box" style="background:${o}"></div>
-<p>${o}</p>
+<div class="average-color-box" style="background:${color}"></div>
+<p>${color}</p>
 </div>
 </div>
-`),s.innerHTML=`<div class="grid">${a.join("")}</div>`,document.getElementById("lastSync").textContent=`Last updated: ${new Date(e.lastSync).toLocaleString()}`}async function loadUser(){let t=await fetch("https://madfetch.vercel.app/html/slackinhackin.vercel.app/api/random"),e=await t.json();e=JSON.parse(e.body);let s=document.getElementById("userCard"),n=e.status_emoji?`
+`);
+
+el.innerHTML = `<div class="grid">${sections.join('')}</div>`;
+
+document.getElementById('lastSync').textContent = `Last updated: ${new Date(data.lastSync).toLocaleString()}`;
+}
+
+async function loadUser() {
+const res = await fetch('https://madfetch.vercel.app/html/slackinhackin.vercel.app/api/random');
+let user = await res.json();
+user = JSON.parse(user.body);
+const card = document.getElementById('userCard');
+
+const statusEmoji = user.status_emoji ? `
 <div style="display: flex; align-items: center; justify-content: center; font-size: 16px; text-align: center; gap: 6px;">
-${e.emoji_url?`<span style="display: inline-block; width: 30px; height: 30px; background-image: url('${e.emoji_url}'); background-size: contain; background-repeat: no-repeat;"></span>`:""}
-<span style="word-wrap: break-word; max-width: 150px; display: inline-block;">${e.status||""}</span>
+${user.emoji_url ? `<span style="display: inline-block; width: 30px; height: 30px; background-image: url('${user.emoji_url}'); background-size: contain; background-repeat: no-repeat;"></span>`: ''}
+<span style="word-wrap: break-word; max-width: 150px; display: inline-block;">${user.status || ''}</span>
 </div>
-`:"";s.innerHTML=`
-<img src="${e.image}" alt="Profile Picture">
-<h2>${e.real_name||e.name}</h2>
-<div class="color-badge" style="background:#${e.color}"></div>
-${n}
+`: '';
+card.innerHTML = `
+<img src="${user.image}" alt="Profile Picture">
+<h2>${user.real_name || user.name}</h2>
+<div class="color-badge" style="background:#${user.color}"></div>
+${statusEmoji}
 <div class="user-stats">
-<center><p><span>@${e.name}</span></p></center>
-<p><strong>Joined:</strong> <span>${e.start_date||"Unknown"}</span></p>
-<p><span>${e.tz?e.tz.replace("_"," "):"Not set"}</span></p>
-<p><strong>Pronouns:</strong> <span>${e.pronouns?e.pronouns.trim():"Not set"}</span></p>
-${e.title?`<p><strong>Title:</strong> <span>${e.title}</span></p>`:""}
-${e.skype?`<p><strong>Skype:</strong> <span>${e.skype}</span></p>`:""}
+<center><p><span>@${user.name}</span></p></center>
+<p><strong>Joined:</strong> <span>${user.start_date || 'Unknown'}</span></p>
+<p><span>${user.tz ? user.tz.replace('_',
+' '): 'Not set'}</span></p>
+<p><strong>Pronouns:</strong> <span>${user.pronouns ? user.pronouns.trim(): 'Not set'}</span></p>
+${user.title ? `<p><strong>Title:</strong> <span>${user.title}</span></p>`: ''}
+${user.skype ? `<p><strong>Skype:</strong> <span>${user.skype}</span></p>`: ''}
 </div>
-`}main(),loadUser();class MadlogAPI{constructor(t){this.channel=t||"all",this.apiUrl="https://madlog.vercel.app/api",this.eventSource=null,this.retryCount=0,this.maxRetries=5,this.retryDelay=3e3}async logComment(t){if(!t||"string"!=typeof t||!t.trim()){console.error("Invalid comment: Comment cannot be empty"),this.displaySystemMessage("Comment cannot be empty","error");return}let e=localStorage.getItem("username")||"Anonymous",s=this.sanitizeInput(t),n=`${e}:::${s}`,r=`${this.apiUrl}/log?text=${encodeURIComponent(n)}&channel=${this.channel}&country=O&status=log`;try{let a=await fetch(r,{method:"GET",headers:{"Content-Type":"application/json"}});if(!a.ok)throw Error(`HTTP error! status: ${a.status}`);console.log("Comment logged successfully!"),this.displaySystemMessage("Comment posted successfully!","success")}catch(o){console.error("Failed to log comment:",o),this.displaySystemMessage("Failed to post comment. Please try again.","error")}}subscribe(){this.eventSource&&this.eventSource.close();let t=`${this.apiUrl}/subscribe?channel=${this.channel}`;this.eventSource=new EventSource(t),this.eventSource.onopen=()=>{console.log(`Subscribed to ${this.channel} channel`),this.retryCount=0,this.displaySystemMessage("Connected to chat","info")},this.eventSource.onmessage=t=>{try{let e=JSON.parse(t.data),s=e.text.split(":::")[0]||"Anonymous";e.text=e.text.split(":::")[1];let n=new Date(e.time),r=this.sanitizeInput(e.text);this.displayComment(s,r,n)}catch(a){console.error("Error parsing message:",a)}},this.eventSource.onerror=t=>{if(console.error("Event stream error:",t),this.retryCount<this.maxRetries){this.retryCount++;let e=this.retryDelay*this.retryCount;this.displaySystemMessage(`Connection lost. Attempting to reconnect (${this.retryCount}/${this.maxRetries})...`,"warning"),setTimeout(()=>{this.subscribe()},e)}else this.displaySystemMessage("Failed to reconnect. Please refresh the page.","error"),this.eventSource.close()}}displayComment(t,e,s=new Date){if(!e||!t)return;let n=document.getElementById("commentsContainer");if(!n)return;let r=this.isScrolledToBottom(n),a=document.createElement("div");a.classList.add("comment");let o=this.timeAgo(s),i=this.sanitizeInput(t),l=this.sanitizeInput(e);a.innerHTML=`
-      <span class="username">${i}</span>
-      <span class="timestamp">${o}</span>
-      <div class="text">${l}</div>
-    `,n.appendChild(a),r&&(n.scrollTop=n.scrollHeight)}displaySystemMessage(t,e="info"){let s=document.getElementById("commentsContainer");if(!s)return;let n=document.createElement("div");n.classList.add("system-message",e),n.textContent=t,s.appendChild(n),s.scrollTop=s.scrollHeight}sanitizeInput(t){if(!t)return"";let e=document.createElement("div");return e.textContent=t,e.innerHTML.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/'/g,"&#39;").replace(/"/g,"&#34;")}isScrolledToBottom(t){return t.scrollHeight-t.scrollTop<=t.clientHeight+50}timeAgo(t){t instanceof Date||(t=new Date(t));let e=new Date,s=Math.floor((e-t)/1e3);if(s<60)return`${s} second${1===s?"":"s"} ago`;let n=Math.floor(s/60);if(n<60)return`${n} minute${1===n?"":"s"} ago`;let r=Math.floor(n/60);if(r<24)return`${r} hour${1===r?"":"s"} ago`;let a=Math.floor(r/24);return`${a} day${1===a?"":"s"} ago`}}let madlog;try{(madlog=new MadlogAPI("slackhackchat")).subscribe()}catch(t){console.error("Failed to initialize MadlogAPI:",t)}document.getElementById("submitComment")?.addEventListener("click",()=>{let t=document.getElementById("comment"),e=t?.value?.trim();e?(madlog?.logComment(e),t.value="",t.focus()):madlog?.displaySystemMessage("Please enter a comment before submitting","error")}),document.getElementById("username")?.addEventListener("input",()=>{let t=document.getElementById("username"),e=t?.value?.trim();e||(e="Anonymous",t.value=e);try{localStorage.setItem("username",e),madlog?.displaySystemMessage(`Username set to ${e}`,"success")}catch(s){console.error("Failed to save username:",s),madlog?.displaySystemMessage("Failed to save username. Please try again.","error")}}),window.addEventListener("DOMContentLoaded",()=>{try{let t=localStorage.getItem("username");t&&document.getElementById("username")&&(document.getElementById("username").value=t)}catch(e){console.error("Failed to load username:",e)}}),document.getElementById("comment")?.addEventListener("keypress",t=>{"Enter"!==t.key||t.shiftKey||(t.preventDefault(),document.getElementById("submitComment")?.click())});</script>
+`;
+}
+
+// Load both functions
+main();
+loadUser();
+
+
+class MadlogAPI {
+  constructor(channel) {
+    this.channel = channel || 'all';  // Default channel is 'all'
+    this.apiUrl = 'https://madlog.vercel.app/api';
+    this.eventSource = null;
+    this.retryCount = 0;
+    this.maxRetries = 5;
+    this.retryDelay = 3000; // 3 seconds
+  }
+
+  // Method to log a comment with validation
+  async logComment(comment) {
+    if (!comment || typeof comment !== 'string' || !comment.trim()) {
+      console.error('Invalid comment: Comment cannot be empty');
+      this.displaySystemMessage('Comment cannot be empty', 'error');
+      return;
+    }
+
+    const username = localStorage.getItem('username') || 'Anonymous';
+    const sanitizedComment = this.sanitizeInput(comment);
+    const commentText = `${username}:::${sanitizedComment}`;
+    const url = `${this.apiUrl}/log?text=${encodeURIComponent(commentText)}&channel=${this.channel}&country=O&status=log`;
+
+    try {
+      const response = await fetch(url, { 
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      console.log('Comment logged successfully!');
+      this.displaySystemMessage('Comment posted successfully!', 'success');
+      
+    } catch (error) {
+      console.error('Failed to log comment:', error);
+      this.displaySystemMessage('Failed to post comment. Please try again.', 'error');
+    }
+  }
+
+  // Subscribe to the event stream with reconnection logic
+  subscribe() {
+    if (this.eventSource) {
+      this.eventSource.close();
+    }
+
+    const url = `${this.apiUrl}/subscribe?channel=${this.channel}`;
+    this.eventSource = new EventSource(url);
+
+    this.eventSource.onopen = () => {
+      console.log(`Subscribed to ${this.channel} channel`);
+      this.retryCount = 0; // Reset retry counter on successful connection
+      this.displaySystemMessage(`Connected to chat`, 'info');
+    };
+
+    this.eventSource.onmessage = (event) => {
+      try {
+        const message = JSON.parse(event.data);
+        const username = message.text.split(":::")[0] || 'Anonymous';
+        message.text = message.text.split(":::")[1];
+        const time = new Date(message.time);
+        const sanitizedText = this.sanitizeInput(message.text);
+        this.displayComment(username, sanitizedText, time);
+      } catch (error) {
+        console.error('Error parsing message:', error);
+      }
+    };
+
+    this.eventSource.onerror = (error) => {
+      console.error('Event stream error:', error);
+      
+      if (this.retryCount < this.maxRetries) {
+        this.retryCount++;
+        const delay = this.retryDelay * this.retryCount;
+        this.displaySystemMessage(`Connection lost. Attempting to reconnect (${this.retryCount}/${this.maxRetries})...`, 'warning');
+        
+        setTimeout(() => {
+          this.subscribe();
+        }, delay);
+      } else {
+        this.displaySystemMessage('Failed to reconnect. Please refresh the page.', 'error');
+        this.eventSource.close();
+      }
+    };
+  }
+
+  // Display comment with proper sanitization
+  displayComment(username, text, timestamp = new Date()) {
+    if (!text || !username) return;
+
+    const commentContainer = document.getElementById('commentsContainer');
+    if (!commentContainer) return;
+
+    // Scroll position management
+    const wasScrolledToBottom = this.isScrolledToBottom(commentContainer);
+
+    const newComment = document.createElement('div');
+    newComment.classList.add('comment');
+    
+    const timeAgo = this.timeAgo(timestamp);
+    const sanitizedUsername = this.sanitizeInput(username);
+    const sanitizedText = this.sanitizeInput(text);
+    
+    newComment.innerHTML = `
+      <span class="username">${sanitizedUsername}</span>
+      <span class="timestamp">${timeAgo}</span>
+      <div class="text">${sanitizedText}</div>
+    `;
+    
+    commentContainer.appendChild(newComment);
+
+    // Maintain scroll position
+    if (wasScrolledToBottom) {
+      commentContainer.scrollTop = commentContainer.scrollHeight;
+    }
+  }
+
+  // Display system messages (errors, info, etc.)
+  displaySystemMessage(message, type = 'info') {
+    const commentContainer = document.getElementById('commentsContainer');
+    if (!commentContainer) return;
+
+    const systemMessage = document.createElement('div');
+    systemMessage.classList.add('system-message', type);
+    systemMessage.textContent = message;
+    
+    commentContainer.appendChild(systemMessage);
+    commentContainer.scrollTop = commentContainer.scrollHeight;
+  }
+
+  // Basic input sanitization
+  sanitizeInput(input) {
+    if (!input) return '';
+    
+    const div = document.createElement('div');
+    div.textContent = input;
+    return div.innerHTML
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/'/g, '&#39;')
+      .replace(/"/g, '&#34;');
+  }
+
+  // Check if container is scrolled to bottom
+  isScrolledToBottom(element) {
+    return element.scrollHeight - element.scrollTop <= element.clientHeight + 50;
+  }
+
+  // Convert timestamp to human-readable format
+  timeAgo(timestamp) {
+    if (!(timestamp instanceof Date)) {
+      timestamp = new Date(timestamp);
+    }
+    
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - timestamp) / 1000);
+    
+    if (diffInSeconds < 60) return `${diffInSeconds} second${diffInSeconds === 1 ? '' : 's'} ago`;
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `${diffInMinutes} minute${diffInMinutes === 1 ? '' : 's'} ago`;
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours} hour${diffInHours === 1 ? '' : 's'} ago`;
+    const diffInDays = Math.floor(diffInHours / 24);
+    return `${diffInDays} day${diffInDays === 1 ? '' : 's'} ago`;
+  }
+}
+
+// Initialize with better error handling
+let madlog;
+try {
+  madlog = new MadlogAPI('slackhackchat');
+  madlog.subscribe();
+} catch (error) {
+  console.error('Failed to initialize MadlogAPI:', error);
+}
+
+// Enhanced comment submission
+document.getElementById('submitComment')?.addEventListener('click', () => {
+  const commentInput = document.getElementById('comment');
+  const comment = commentInput?.value?.trim();
+  
+  if (comment) {
+    madlog?.logComment(comment);
+    commentInput.value = '';
+    commentInput.focus();
+  } else {
+    madlog?.displaySystemMessage('Please enter a comment before submitting', 'error');
+  }
+});
+
+// Enhanced username handling
+document.getElementById('username')?.addEventListener('input', () => {
+  const usernameInput = document.getElementById('username');
+  let username = usernameInput?.value?.trim();
+  
+  if (!username) {
+    username = 'Anonymous';
+    usernameInput.value = username;
+  }
+  
+  try {
+    localStorage.setItem('username', username);
+    madlog?.displaySystemMessage(`Username set to ${username}`, 'success');
+  } catch (error) {
+    console.error('Failed to save username:', error);
+    madlog?.displaySystemMessage('Failed to save username. Please try again.', 'error');
+  }
+});
+
+// Load saved username on page load
+window.addEventListener('DOMContentLoaded', () => {
+  try {
+    const savedUsername = localStorage.getItem('username');
+    if (savedUsername && document.getElementById('username')) {
+      document.getElementById('username').value = savedUsername;
+    }
+  } catch (error) {
+    console.error('Failed to load username:', error);
+  }
+});
+
+// Add keyboard support for comment submission
+document.getElementById('comment')?.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    document.getElementById('submitComment')?.click();
+  }
+});
+</script>
+
 </body>
 </html>
