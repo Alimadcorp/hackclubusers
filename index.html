@@ -308,7 +308,7 @@
 
     .comment .text {
       margin-top: 5px;
-      color: #555;
+      color: #fff;
     }
 
     /* Mobile Responsiveness */
@@ -338,6 +338,7 @@
 
   .comment {
     background-color: #1a1a1a;
+    color: #ffa;
     padding: 10px;
     margin-bottom: 10px;
     font-size: 13px;
@@ -727,7 +728,6 @@ document.getElementById('username')?.addEventListener('input', () => {
   
   try {
     localStorage.setItem('username', username);
-    madlog?.displaySystemMessage(`Username set to ${username}`, 'success');
   } catch (error) {
     console.error('Failed to save username:', error);
     madlog?.displaySystemMessage('Failed to save username. Please try again.', 'error');
