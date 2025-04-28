@@ -265,9 +265,8 @@ td.emoji-cell {
 
 <script>
 async function main() {
-  const res = await fetch('https://madfetch.vercel.app/html/slackinhackin.vercel.app/api/stats');
+  const res = await fetch('https://slackinhackin.vercel.app/api/stats');
   let data = await res.json();
-  data = JSON.parse(data.body);
   const el = document.getElementById('content');
   el.innerHTML = '';
 
@@ -335,9 +334,8 @@ async function main() {
 }
 
 async function loadUser() {
-  const res = await fetch('https://madfetch.vercel.app/html/slackinhackin.vercel.app/api/random');
+  const res = await fetch('https://slackinhackin.vercel.app/api/random');
   let user = await res.json();
-  user = JSON.parse(user.body);
   const card = document.getElementById('userCard');
   
   const statusEmoji = user.status_emoji ? `
