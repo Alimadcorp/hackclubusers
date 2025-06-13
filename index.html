@@ -596,7 +596,7 @@ class MadlogAPI {
 
     this.eventSource.onerror = (error) => {
       console.error('Event stream error:', error);
-      
+      return;
       if (this.retryCount < this.maxRetries) {
         this.retryCount++;
         const delay = this.retryDelay * this.retryCount;
