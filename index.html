@@ -426,6 +426,7 @@ return `<div class="card"><h2>${title}</h2>${tableHtml}</div>`;
 };
 
 const makeTable = (entries, keyLabel = 'Key', valueLabel = 'Count', emoji = false) => {
+let c = keyLabel == "Color (HEX)";
 const top10 = entries.sort((a, b) => b[1]-a[1]).slice(0, 10);
 const rows = top10.map(([k, v], i) => {
 if (emoji) {
@@ -442,7 +443,7 @@ ${emojiKey}
 </tr>
 `;
 }
-return `<tr><td class="rank">#${i+1}</td><td>${k}</td><td>${v}</td></tr>`;
+return `<tr><td class="rank">#${i+1}</td><td style=color:${c ? "#" + k + ";font-weight:700" : "#fff"};>${k}</td><td>${v}</td></tr>`;
 }).join('');
 return `<div class="table-container"><table><thead><tr><th>Rank</th><th>${keyLabel}</th><th>${valueLabel}</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 };
@@ -466,23 +467,15 @@ addSection('General Stats',
 addSection('Top Status Emojis',
 makeTable(Object.entries(data.status_emoji), 'Emoji', 'Count', true)),
 addSection('Popular Names',
-makeTable(Object.entries(data.namez))),
+makeTable(Object.entries(data.namez), "Name")),
 addSection('Pronouns Used',
-makeTable(Object.entries(data.prons))),
+makeTable(Object.entries(data.prons), "Pronoun")),
 addSection('Top Timezones',
-makeTable(Object.entries(data.tz)))
+makeTable(Object.entries(data.tz), "Timezone")),
+addSection('Top Theme Colors',
+makeTable(Object.entries(data.colors), "Color (HEX)"))
 ];
 
-const color = `rgb(${data.tot_color.r}, ${data.tot_color.g}, ${data.tot_color.b})`;
-sections.push(`
-<div class="card">
-<h2>Average Profile Color</h2>
-<div class="average-color">
-<div class="average-color-box" style="background:${color}"></div>
-<p>${color}</p>
-</div>
-</div>
-`);
 
 el.innerHTML = `<div class="grid">${sections.join('')}</div>`;
 
@@ -568,49 +561,17 @@ class MadlogAPI {
   }
 
   // Subscribe to the event stream with reconnection logic
-  subscribe() {
-    if (this.eventSource) {
-      this.eventSource.close();
-    }
-
-    const url = `${this.apiUrl}/subscribe?channel=${this.channel}`;
-    this.eventSource = new EventSource(url);
-
-    this.eventSource.onopen = () => {
-      console.log(`Subscribed to ${this.channel} channel`);
-      this.retryCount = 0; // Reset retry counter on successful connection
-      this.displaySystemMessage(`Connected to chat`, 'info');
-    };
-
-    this.eventSource.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data);
+  async subscribe() {
+    const url = `${this.apiUrl}/pull?channel=${this.channel}`;
+    const r = await fetch(url);
+    const b = await r.json();
+    b.forEach(message => {
         const username = message.text.split(":::")[0] || 'Anonymous';
         message.text = message.text.split(":::")[1];
         const time = new Date(message.time);
         const sanitizedText = this.sanitizeInput(message.text);
         this.displayComment(username, sanitizedText, time);
-      } catch (error) {
-        console.error('Error parsing message:', error);
-      }
-    };
-
-    this.eventSource.onerror = (error) => {
-      console.error('Event stream error:', error);
-      return;
-      if (this.retryCount < this.maxRetries) {
-        this.retryCount++;
-        const delay = this.retryDelay * this.retryCount;
-        this.displaySystemMessage(`Connection lost. Attempting to reconnect (${this.retryCount}/${this.maxRetries})...`, 'warning');
-        
-        setTimeout(() => {
-          this.subscribe();
-        }, delay);
-      } else {
-        this.displaySystemMessage('Failed to reconnect. Please refresh the page.', 'error');
-        this.eventSource.close();
-      }
-    };
+    });
   }
 
   // Display comment with proper sanitization
