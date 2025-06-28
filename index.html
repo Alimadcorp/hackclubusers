@@ -566,7 +566,7 @@ class MadlogAPI {
     const url = `${this.apiUrl}/pull?channel=${this.channel}`;
     const r = await fetch(url);
     const b = await r.json();
-    b.forEach(message => {
+    b.logs.forEach(message => {
         const username = message.text.split(":::")[0] || 'Anonymous';
         message.text = message.text.split(":::")[1];
         const time = new Date(message.time);
