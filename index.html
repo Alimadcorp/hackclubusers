@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta property="og:title" content="Hackclub Stats">
+<meta charset="UTF-8">
+<meta property="og:title" content="Hackclub Stats">
 <meta property="og:site_name" content="Hackclub Slack Statistics" >
 <meta property="og:url" content="https://alimadcorp.github.io/hackclubusers" >
 <meta property="og:description" content="View statistics of the hackclub slack, most used usernames and view the selected user of the day.">
 <meta property="og:type" content=website>
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Hack_Club_Flag_Standalone.svg/1200px-Hack_Club_Flag_Standalone.svg.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HackClub Slack Statistics</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HackClub Slack Statistics</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
 :root {
     --bg-dark: #0b0f14;
     --bg-card: #161b22;
@@ -365,11 +365,9 @@
     max-height: 300px;
     overflow-y: auto;
   }
-}
-  </style>
+</style>
 </head>
 <body>
-
   <header>
     <h1>HackClub Slack Statistics</h1>
     <p class="subtitle">
@@ -389,7 +387,6 @@
   </div>
   <h1>Comments</h1>
   <section class="comment-section">
-    <!-- Username input -->
     <div class="username-section">
       <label for="username">Your Username:</label>
       <input id="username" type="text" placeholder="Anonymous" />
@@ -400,12 +397,8 @@
       <button id="submitComment" class="submit-btn">Submit Comment</button>
     </div>
 
-    <div id="commentsContainer" class="comments-container">
-      <!-- Comments will be dynamically added here -->
-    </div>
+    <div id="commentsContainer" class="comments-container"></div>
   </section>
-
-</div>
 </section>
 <div class="last-sync" id="lastSync"></div>
 
@@ -431,7 +424,14 @@ const top10 = entries.sort((a, b) => b[1]-a[1]).slice(0, 10);
 const rows = top10.map(([k, v], i) => {
 if (emoji) {
 const emojiKey = k.replace(/^:|:$/g, '');
-const emojiUrl = data.emoji_urls[k];
+let emojiUrl = `https://e.alimad.co/${emojiKey}`;
+if(emojiKey === "no_bell") {
+  emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple-large/1f515.png";
+} else if (emojiKey === "speech_balloon") {
+    emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple-large/1f4ac.png";
+} else if (emojiKey === "house_with_garden") {
+    emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple-large/1f3e1.png";
+}
 return `
 <tr>
 <td class="rank">#${i+1}</td>
@@ -454,14 +454,18 @@ addSection('General Stats',
 <table>
 <tbody>
 <tr><td>Total Users</td><td>${data.sum}</td></tr>
-<tr><td>Active Users</td><td>${data.sum-data.deleted}</td></tr>
-<tr><td>Deleted Accounts</td><td>${data.deleted}</td></tr>
-<tr><td>Set Statuses</td><td>${data.set_status}</td></tr>
+<tr><td>Active Users</td><td>${data.active_users}</td></tr>
+<tr><td>Guest Users</td><td>${data.guests}</td></tr>
 <tr><td>Bots</td><td>${data.bots}</td></tr>
-<tr><td>Emails</td><td>${data.emails}</td></tr>
+<tr><td>Banned Users</td><td>${data.banned}</td></tr>
+<tr><td>Deleted Users</td><td>${data.deleted}</td></tr>
+<tr><td>Set Statuses</td><td>${data.set_status}</td></tr>
+<tr><td>Emails Verified</td><td>${data.emails}</td></tr>
 <tr><td>Phone Numbers</td><td>${data.phone}</td></tr>
 <tr><td>Skype Accounts</td><td>${data.skype}</td></tr>
 <tr><td>Titles</td><td>${data.title}</td></tr>
+<tr><td>Channels</td><td>${data.channels}</td></tr>
+<tr><td>Emojis</td><td>${data.emoji}</td></tr>
 </tbody>
 </table>
 `),
@@ -492,22 +496,23 @@ const card = document.getElementById('userCard');
 const statusEmoji = user.status_emoji ? `
 <div style="display: flex; align-items: center; justify-content: center; font-size: 16px; text-align: center; gap: 6px;">
 ${user.emoji_url ? `<span style="display: inline-block; width: 30px; height: 30px; background-image: url('${user.emoji_url}'); background-size: contain; background-repeat: no-repeat;"></span>`: ''}
-<span style="word-wrap: break-word; max-width: 150px; display: inline-block;">${user.status || ''}</span>
+<span style="word-wrap: break-word; max-width: 300px; display: inline-block;">${user.status || ''}</span>
 </div>
 `: '';
 card.innerHTML = `
 <img src="${user.image}" alt="Profile Picture">
-<h2>${user.real_name || user.name}</h2>
+<h2><strong>${user.real_name || user.name}</strong></h2>
 <div class="color-badge" style="background:#${user.color}"></div>
 ${statusEmoji}
 <div class="user-stats">
 <center><p><span>@${user.name}</span></p></center>
 <p><strong>Joined:</strong> <span>${user.start_date || 'Unknown'}</span></p>
-<p><span>${user.tz ? user.tz.replace('_',
+<p><strong>Timezone:</strong> <span>${user.tz ? user.tz.replace('_',
 ' '): 'Not set'}</span></p>
 <p><strong>Pronouns:</strong> <span>${user.pronouns ? user.pronouns.trim(): 'Not set'}</span></p>
 ${user.title ? `<p><strong>Title:</strong> <span>${user.title}</span></p>`: ''}
 ${user.skype ? `<p><strong>Skype:</strong> <span>${user.skype}</span></p>`: ''}
+<p style="font-size: 12px; color: #888;">Only users with all these properties are selected as random user (${user.eligible} currently eligible)</p>
 </div>
 `;
 }
