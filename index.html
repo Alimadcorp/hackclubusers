@@ -15,7 +15,7 @@
 <style>
 @font-face {
 font-family: 'Geist';
-src: url('https://cdn.alimad.co/f/geist.woff2') format('woff2');
+src: url('https://corsproxy.io/?url=cdn.alimad.co/f/geist.woff2') format('woff2');
 font-weight: normal;
 font-style: normal;
 font-display: swap;
@@ -499,7 +499,7 @@ this.addLocal(username, comment);
 this.render();
 fetch(url).catch(()=>this.addSystem('Failed to sync to server'));
 }
-function s(input) {
+sane(input) {
 if (input === null || input === undefined) return '';
 const s = String(input);
 return s.replace(/[&<>"'`]/g, ch => ({
@@ -512,7 +512,7 @@ try {
 const r = await fetch(url);
 const b = await r.json();
 const fresh = b.logs.map(x=>{
-const [u,t] = s(x.text).split(':::');
+const [u,t] = sane(x.text).split(':::');
 return {u:u||'Anonymous',t:t,time:x.time};
 });
 localStorage.setItem(this.localKey, JSON.stringify(fresh));
