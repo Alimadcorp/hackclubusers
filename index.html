@@ -515,7 +515,7 @@ const fresh = b.logs.map(x=>{
 const [u,t] = this.sane(x.text).split(':::');
 return {u:u||'Anonymous',t:t,time:x.time};
 });
-if(locakStorage.getItem(this.localKey) != JSON.stringify(fresh)){
+if(localStorage.getItem(this.localKey) != JSON.stringify(fresh)){
 localStorage.setItem(this.localKey, JSON.stringify(fresh));
 this.render();}
 } catch(e) { this.addSystem(e.toString()); }
