@@ -40,6 +40,8 @@ margin: 0 auto;
 }
 * {
 font-family: "Geist", sans-serif;
+scrollbar-width: thin;
+scrollbar-color: #fff2 transparent;
 }
 header {
 text-align: center;
@@ -66,7 +68,7 @@ margin-bottom: 40px;
 background: var(--bg-card);
 border: 1px solid var(--border);
 border-radius: 16px;
-padding: 25px;
+padding: 15px;
 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -398,6 +400,8 @@ emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple
 emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple-large/1f4ac.png";
 } else if (emojiKey === "house_with_garden") {
 emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple-large/1f3e1.png";
+} else if (emojiKey === "cheese") {
+emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f42e.png";
 }
 return `
 <tr>
