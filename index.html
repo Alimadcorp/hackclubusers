@@ -512,7 +512,7 @@ try {
 const r = await fetch(url);
 const b = await r.json();
 const fresh = b.logs.map(x=>{
-const [u,t] = sane(x.text).split(':::');
+const [u,t] = this.sane(x.text).split(':::');
 return {u:u||'Anonymous',t:t,time:x.time};
 });
 localStorage.setItem(this.localKey, JSON.stringify(fresh));
