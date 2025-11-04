@@ -515,8 +515,9 @@ const fresh = b.logs.map(x=>{
 const [u,t] = this.sane(x.text).split(':::');
 return {u:u||'Anonymous',t:t,time:x.time};
 });
+if(locakStorage.getItem(this.localKey) != JSON.stringify(fresh)){
 localStorage.setItem(this.localKey, JSON.stringify(fresh));
-this.render();
+this.render();}
 } catch(e) { this.addSystem(e.toString()); }
 }
 addLocal(u,t) {
@@ -538,7 +539,7 @@ d.innerHTML = `<span class="username">${x.u}</span>
 <div class="text">${x.t}</div>`;
 c.appendChild(d);
 });
-c.scrollTop = c.scrollHeight;
+c.scrollTo({ top: c.scrollHeight, behavior: 'smooth' });
 }
 addSystem(msg) {
 const c = document.getElementById('commentsContainer');
