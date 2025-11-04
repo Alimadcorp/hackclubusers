@@ -517,7 +517,7 @@ return {u:u||'Anonymous',t:t,time:x.time};
 });
 localStorage.setItem(this.localKey, JSON.stringify(fresh));
 this.render();
-} catch(e) { this.addSystem('Offline'); }
+} catch(e) { this.addSystem(e.toString()); }
 }
 addLocal(u,t) {
 const arr = this.getLocal();
