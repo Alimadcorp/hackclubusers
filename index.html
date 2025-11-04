@@ -339,38 +339,6 @@ textarea {height: 80px;}
 </style>
 </head>
 <body>
-<header>
-<h1>HackClub Slack Statistics</h1>
-<p class="subtitle">
-Powered by Alimad Surveillance
-</p>
-<div class="card user-card">
-<h2>User of the Day</h2>
-<div id="userCard">
-Loading...
-</div>
-</div>
-</header>
-<div id="content">
-Loading...
-</div>
-<h1>Comments</h1>
-<section class="comment-section">
-<div class="username-section">
-<label for="username">Your Username:</label>
-<input id="username" type="text" placeholder="Anonymous" />
-</div>
-<div class="comment-form">
-<textarea id="comment" placeholder="Write your comment..." rows="5"></textarea>
-<button id="submitComment" class="submit-btn">Submit Comment</button>
-</div>
-<div id="commentsContainer" class="comments-container"></div>
-</section>
-</section>
-<div class="last-sync" id="lastSync"></div>
-<div class="footer">
-Made with by Muhammad Ali
-</div>
 <script>
 async function main() {
 const res = await fetch('https://slackinhackin.vercel.app/api/stats');
@@ -577,5 +545,37 @@ nameEl.oninput=()=>{
 localStorage.setItem('username', nameEl.value.trim()||'Anonymous');
 };
 </script>
+<header>
+<h1>HackClub Slack Statistics</h1>
+<p class="subtitle">
+Powered by Alimad Surveillance
+</p>
+<div class="card user-card">
+<h2>User of the Day</h2>
+<div id="userCard">
+Loading...
+</div>
+</div>
+</header>
+<div id="content">
+Loading...
+</div>
+<h1>Comments</h1>
+<section class="comment-section">
+<div class="username-section">
+<label for="username">Your Username:</label>
+<input id="username" type="text" placeholder="Anonymous" />
+</div>
+<div class="comment-form">
+<textarea id="comment" placeholder="Write your comment..." rows="5"></textarea>
+<button id="submitComment" class="submit-btn">Submit Comment</button>
+</div>
+<div id="commentsContainer" class="comments-container"></div>
+</section>
+</section>
+<div class="last-sync" id="lastSync"></div>
+<div class="footer">
+Made with 🤍 by Muhammad Ali
+</div>
 </body>
 </html>
