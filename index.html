@@ -418,9 +418,9 @@ const addSection = (title, tableHtml) => {
 return `<div class="card"><h2>${title}</h2>${tableHtml}</div>`;
 };
 
-const makeTable = (entries, keyLabel = 'Key', valueLabel = 'Count', emoji = false) => {
+const makeTable = (entries, keyLabel = 'Key', valueLabel = 'Count', emoji = false, max = 10) => {
 let c = keyLabel == "Color (HEX)";
-const top10 = entries.sort((a, b) => b[1]-a[1]).slice(0, 10);
+const top10 = entries.sort((a, b) => b[1]-a[1]).slice(0, max);
 const rows = top10.map(([k, v], i) => {
 if (emoji) {
 const emojiKey = k.replace(/^:|:$/g, '');
@@ -472,13 +472,13 @@ addSection('General Stats',
 addSection('Top Status Emojis',
 makeTable(Object.entries(data.status_emoji), 'Emoji', 'Count', true)),
 addSection('Popular Names',
-makeTable(Object.entries(data.namez), "Name")),
+makeTable(Object.entries(data.namez), "Name", "Count", false, 12)),
 addSection('Pronouns Used',
-makeTable(Object.entries(data.prons), "Pronoun")),
+makeTable(Object.entries(data.prons), "Pronoun", "Count", false, 12)),
 addSection('Top Timezones',
-makeTable(Object.entries(data.tz), "Timezone")),
-addSection('Top Theme Colors',
-makeTable(Object.entries(data.colors), "Color (HEX)"))
+makeTable(Object.entries(data.tz), "Timezone", "Count", false, 12)),
+addSection('Top Emojis',
+makeTable(Object.entries(data.used_emojis), "Emoji", "Uses", true))
 ];
 
 
@@ -516,15 +516,11 @@ ${user.skype ? `<p><strong>Skype:</strong> <span>${user.skype}</span></p>`: ''}
 </div>
 `;
 }
-
-// Load both functions
 main();
 loadUser();
-
-
 class MadlogAPI {
   constructor(channel) {
-    this.channel = channel || 'all';  // Default channel is 'all'
+    this.channel = channel || 'all';
     this.apiUrl = 'https://madlog.vercel.app/api';
     this.eventSource = null;
     this.retryCount = 0;
