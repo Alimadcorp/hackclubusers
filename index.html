@@ -487,6 +487,7 @@ class MadlogAPI {
 constructor(channel='all') {
 this.channel = channel;
 this.apiUrl = 'https://madlog.vercel.app/api';
+this.first = true;
 this.localKey = `comments-${channel}`;
 this.refresh();
 setInterval(()=>this.refresh(),10000);
@@ -515,9 +516,11 @@ const fresh = b.logs.map(x=>{
 const [u,t] = this.sane(x.text).split(':::');
 return {u:u||'Anonymous',t:t,time:x.time};
 });
-if(localStorage.getItem(this.localKey) != JSON.stringify(fresh)){
+if(localStorage.getItem(this.localKey) != JSON.stringify(fresh) || this.first){
 localStorage.setItem(this.localKey, JSON.stringify(fresh));
-this.render();}
+this.render();
+this.first = false;
+}
 } catch(e) { this.addSystem(e.toString()); }
 }
 addLocal(u,t) {
