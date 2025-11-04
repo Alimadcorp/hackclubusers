@@ -499,13 +499,20 @@ this.addLocal(username, comment);
 this.render();
 fetch(url).catch(()=>this.addSystem('Failed to sync to server'));
 }
+function s(input) {
+if (input === null || input === undefined) return '';
+const s = String(input);
+return s.replace(/[&<>"'`]/g, ch => ({
+'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;'
+}[ch]));
+}
 async refresh() {
 const url = `${this.apiUrl}/pull?channel=${this.channel}`;
 try {
 const r = await fetch(url);
 const b = await r.json();
 const fresh = b.logs.map(x=>{
-const [u,t] = x.text.split(':::');
+const [u,t] = s(x.text).split(':::');
 return {u:u||'Anonymous',t:t,time:x.time};
 });
 localStorage.setItem(this.localKey, JSON.stringify(fresh));
