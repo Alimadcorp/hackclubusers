@@ -343,6 +343,13 @@ textarea {height: 80px;}
 .comment .text {font-size: 13px;}
 .comment-section {padding: 0 10px;}
 }
+a {
+text-decoration: none;
+color: var(--primary);
+}
+a:hover {
+text-decoration: underline;
+}
 </style>
 </head>
 <body>
@@ -352,12 +359,13 @@ textarea {height: 80px;}
 Powered by Alimad Surveillance
 </p>
 <div class="card user-card">
-<h2>User of the Day</h2>
+<h2><a href="https://api.hackclub.alimad.co/api/random" target="_blank">User of the Day</a></h2>
 <div id="userCard">
 Loading...
 </div>
 </div>
 </header>
+<h1 style="text-align: center;"><a href="https://api.hackclub.alimad.co/api/stats" target="_blank">Stats</a></h1>
 <div id="content">
 Loading...
 </div>
@@ -380,7 +388,7 @@ Made with 🤍 by Muhammad Ali
 </div>
 <script>
 async function main() {
-const res = await fetch('https://slackinhackin.vercel.app/api/stats');
+const res = await fetch('https://api.hackclub.alimad.co/api/stats');
 let data = await res.json();
 const el = document.getElementById('content');
 el.innerHTML = '';
