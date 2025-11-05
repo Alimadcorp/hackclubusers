@@ -430,39 +430,6 @@ const rows = top10.map(([k, v], i) => {
 if (emoji) {
 const emojiKey = k.replace(/^:|:$/g, '');
 let emojiUrl = `https://e.alimad.co/${emojiKey}`;
-if (emojiKey === "no_bell") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple-large/1f515.png";
-} else if (emojiKey === "speech_balloon") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple-large/1f4ac.png";
-} else if (emojiKey === "house_with_garden") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple-large/1f3e1.png";
-} else if (emojiKey === "cheese") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f42e.png";
-} else if (emojiKey.toLowerCase() === "eyes") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-medium/1f440.png";
-} else if (emojiKey.toLowerCase() === "fire") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-medium/1f525.png";
-} else if (emojiKey.toLowerCase() === "sparkling_heart") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f496.png";
-} else if (emojiKey.toLowerCase() === "school") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f3eb.png";
-} else if (emojiKey.toLowerCase() === "mask") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f637.png";
-} else if (emojiKey.toLowerCase() === "custard") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f36e.png";
-} else if (emojiKey.toLowerCase() === "ship") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f6a2.png";
-} else if (emojiKey.toLowerCase() === "palm_tree") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f334.png";
-} else if (emojiKey.toLowerCase() === "space_invader") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f47e.png";
-} else if (emojiKey.toLowerCase() === "computer") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f4bb.png";
-} else if (emojiKey.toLowerCase() === "rainbow") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f308.png";
-} else if (emojiKey.toLowerCase() === "robot_face") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f916.png";
-}
 return `
 <tr>
 <td class="rank">#${i+1}</td>
@@ -521,7 +488,7 @@ const card = document.getElementById('userCard');
 const statusEmoji = user.status_emoji ? `
 <div style="display: flex; align-items: center; justify-content: center; font-size: 16px; text-align: center; gap: 6px;">
 ${user.emoji_url ? `<span style="display: inline-block; width: 30px; height: 30px; background-image: url('${user.emoji_url}'); background-size: contain; background-repeat: no-repeat;"></span>`: ''}
-<span style="word-wrap: break-word; max-width: 300px; display: inline-block;">${user.status || ''}</span>
+<span style="word-wrap: break-word; max-width: 300px; display: inline-block; font-size: 14px;">${user.status || ''}</span>
 </div>
 `: '';
 card.innerHTML = `
