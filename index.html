@@ -745,6 +745,28 @@ chart.update();
 };
 });
 })();
+(function() {
+if(localStorage.getItem("emojiWarJoined")) return;
+const n = document.createElement("div");
+n.textContent = "Join the Emoji Wars!";
+Object.assign(n.style, {
+position:"fixed", top:"12px", right:"12px", padding:"12px 18px",
+background:"#ffcc00", color:"#000", borderRadius:"10px",
+cursor:"pointer", zIndex:99999, fontWeight:"bold",
+boxShadow:"0 4px 12px rgba(0,0,0,0.2)", transition:"transform .2s, opacity .3s"
+});
+n.style.transform = "translateY(-20px)"; n.style.opacity = "0";
+document.body.appendChild(n);
+requestAnimationFrame(() => { n.style.transform = "translateY(0)"; n.style.opacity = "1"; });
+const wiggle = setInterval(()=>{ n.style.transform = "rotate(-3deg)"; setTimeout(()=> n.style.transform="rotate(3deg)",120);},2000);
+n.onclick = () => {
+clearInterval(wiggle);
+localStorage.setItem("emojiWarJoined","yes");
+n.style.opacity="0"; n.style.transform="translateY(-20px)";
+setTimeout(()=> n.remove(),300);
+window.open("https://hackclub.slack.com/archives/C09QEPMD7AB", "_blank");
+};
+})();
 </script>
 </body>
 </html>
