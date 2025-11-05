@@ -431,6 +431,12 @@ emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/googl
 emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f6a2.png";
 } else if (emojiKey.toLowerCase() === "palm_tree") {
 emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f334.png";
+} else if (emojiKey.toLowerCase() === "space_invader") {
+emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f47e.png";
+} else if (emojiKey.toLowerCase() === "computer") {
+emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f4bb.png";
+} else if (emojiKey.toLowerCase() === "rainbow") {
+emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f308.png";
 }
 return `
 <tr>
@@ -473,11 +479,11 @@ makeTable(Object.entries(data.prons), "Pronoun", "Count", false, 12)),
 addSection('Top Timezones',
 makeTable(Object.entries(data.tz), "Timezone", "Count", false, 12)),
 addSection('Popular Names',
-makeTable(Object.entries(data.namez), "Name", "Count", false, 24)),
+makeTable(Object.entries(data.namez), "Name", "Count", false, 36)),
 addSection('Most Used Emojis',
-makeTable(Object.entries(data.used_emojis), "Emoji", "Uses", true, 20)),
+makeTable(Object.entries(data.used_emojis), "Emoji", "Uses", true, 30)),
 addSection('Top Status Emojis',
-makeTable(Object.entries(data.status_emoji), 'Emoji', 'Count', true, 20)),
+makeTable(Object.entries(data.status_emoji), 'Emoji', 'Count', true, 30)),
 ];
 el.innerHTML = `<div class="grid">${sections.join('')}</div>`;
 document.getElementById('lastSync').textContent = `Last updated: ${new Date(data.lastSync).toLocaleString()}`;
