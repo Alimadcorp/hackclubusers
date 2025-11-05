@@ -308,15 +308,27 @@ background: #181818;
 border-radius: 8px;
 padding: 12px 14px;
 margin-bottom: 10px;
-border-left: 4px solid #3ba55d;
+border-left: 4px solid #b9ff57;
 }
 .comment:hover {
 background: #202020;
 }
 .comment .username {
 font-weight: 600;
-color: #57a2ff;
+color: #b9ff57;
 font-size: 13px;
+}
+.comment.alimad {
+border-left: 5px solid #299bff;
+}
+.comment .username.alimad {
+color: #299bff; font-weight: bold;
+}
+.comment.alvina {
+border-left: 5px solid #e357ff;
+}
+.comment .username.alvina {
+color: #e357ff; font-weight: bold;
 }
 .comment .timestamp {
 float: right;
@@ -340,7 +352,7 @@ font-size: 12px;
 }
 @media(max-width: 600px) {
 textarea {height: 80px;}
-.comment .text {font-size: 13px;}
+.comment .text {font-size: 13px; word-wrap: break-word;}
 .comment-section {padding: 0 10px;}
 }
 a {
@@ -593,7 +605,9 @@ c.innerHTML = '';
 this.getLocal().forEach(x=>{
 const d = document.createElement('div');
 d.className = 'comment';
-d.innerHTML = `<span class="username">${this.emojify(x.u)}</span>
+d.classList.add(x.u.startsWith("Alimad Co") ? 'alimad' : 'random');
+d.classList.add(x.u.toLowerCase().startsWith("alvina") ? 'alvina' : 'random');
+d.innerHTML = `<span class="username${x.u.startsWith("Alimad Co") ? ' alimad' : ''}${x.u.toLowerCase().startsWith("alvina") ? ' alvina' : ''}">${this.emojify(x.u)}</span>
 <span class="timestamp">${this.ago(x.time)}</span>
 <div class="text">${this.emojify(x.t)}</div>`;
 c.appendChild(d);
@@ -758,9 +772,7 @@ boxShadow:"0 4px 12px rgba(0,0,0,0.2)", transition:"transform .2s, opacity .3s"
 n.style.transform = "translateY(-20px)"; n.style.opacity = "0";
 document.body.appendChild(n);
 requestAnimationFrame(() => { n.style.transform = "translateY(0)"; n.style.opacity = "1"; });
-const wiggle = setInterval(()=>{ n.style.transform = "rotate(-3deg)"; setTimeout(()=> n.style.transform="rotate(3deg)",120);},2000);
 n.onclick = () => {
-clearInterval(wiggle);
 localStorage.setItem("emojiWarJoined","yes");
 n.style.opacity="0"; n.style.transform="translateY(-20px)";
 setTimeout(()=> n.remove(),300);
