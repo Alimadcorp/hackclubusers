@@ -242,7 +242,7 @@ flex-direction: column;
 gap: 10px;
 }
 textarea {
-width: 100%;
+width: 95%;
 padding: 10px;
 font-size: 1rem;
 border: 1px solid #ddd;
@@ -419,8 +419,16 @@ emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/googl
 emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-medium/1f440.png";
 } else if (emojiKey.toLowerCase() === "fire") {
 emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-medium/1f525.png";
-} else if (emojiKey.toLowerCase() === "eyes") {
-emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-medium/1f440.png";
+} else if (emojiKey.toLowerCase() === "sparkling_heart") {
+emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f496.png";
+} else if (emojiKey.toLowerCase() === "school") {
+emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f3eb.png";
+} else if (emojiKey.toLowerCase() === "mask") {
+emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f637.png";
+} else if (emojiKey.toLowerCase() === "custard") {
+emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f36e.png";
+} else if (emojiKey.toLowerCase() === "ship") {
+emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f6a2.png";
 }
 return `
 <tr>
@@ -458,16 +466,16 @@ addSection('General Stats',
 </tbody>
 </table>
 `),
-addSection('Top Status Emojis',
-makeTable(Object.entries(data.status_emoji), 'Emoji', 'Count', true)),
-addSection('Popular Names',
-makeTable(Object.entries(data.namez), "Name", "Count", false, 12)),
 addSection('Pronouns Used',
 makeTable(Object.entries(data.prons), "Pronoun", "Count", false, 12)),
 addSection('Top Timezones',
 makeTable(Object.entries(data.tz), "Timezone", "Count", false, 12)),
-addSection('Top Emojis',
-makeTable(Object.entries(data.used_emojis), "Emoji", "Uses", true))
+addSection('Popular Names',
+makeTable(Object.entries(data.namez), "Name", "Count", false, 24)),
+addSection('Most Used Emojis',
+makeTable(Object.entries(data.used_emojis), "Emoji", "Uses", true, 20)),
+addSection('Top Status Emojis',
+makeTable(Object.entries(data.status_emoji), 'Emoji', 'Count', true, 20)),
 ];
 el.innerHTML = `<div class="grid">${sections.join('')}</div>`;
 document.getElementById('lastSync').textContent = `Last updated: ${new Date(data.lastSync).toLocaleString()}`;
