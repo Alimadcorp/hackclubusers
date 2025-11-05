@@ -350,6 +350,11 @@ color: var(--primary);
 a:hover {
 text-decoration: underline;
 }
+.emoji img {
+height: 1.35em;
+width: auto;
+vertical-align: -0.35em;
+}
 </style>
 </head>
 <body>
@@ -402,7 +407,7 @@ const rows = top10.map(([k, v], i) => {
 if (emoji) {
 const emojiKey = k.replace(/^:|:$/g, '');
 let emojiUrl = `https://e.alimad.co/${emojiKey}`;
-if(emojiKey === "no_bell") {
+if (emojiKey === "no_bell") {
 emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple-large/1f515.png";
 } else if (emojiKey === "speech_balloon") {
 emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple-large/1f4ac.png";
@@ -410,13 +415,19 @@ emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple
 emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/apple-large/1f3e1.png";
 } else if (emojiKey === "cheese") {
 emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f42e.png";
+} else if (emojiKey.toLowerCase() === "eyes") {
+emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-medium/1f440.png";
+} else if (emojiKey.toLowerCase() === "fire") {
+emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-medium/1f525.png";
+} else if (emojiKey.toLowerCase() === "eyes") {
+emojiUrl = "https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-medium/1f440.png";
 }
 return `
 <tr>
 <td class="rank">#${i+1}</td>
 <td class="emoji-cell">
 ${emojiUrl ? `<img src="${emojiUrl}" alt="${emojiKey}" class="emoji-img">`: ''}
-${emojiKey}
+${emojiKey.toLowerCase()}
 </td>
 <td>${v}</td>
 </tr>
@@ -521,7 +532,10 @@ try {
 const r = await fetch(url);
 const b = await r.json();
 const fresh = b.logs.map(x=>{
-const [u,t] = this.sane(x.text).split(':::');
+const re = /^((?:[^:]+|:[A-Za-z0-9_-]+:)+?):::(.*)$/;
+const m = this.sane(x.text).match(re);
+const u = m ? m[1] : '';
+const t = m ? m[2] : '';
 return {u:u||'Anonymous',t:t,time:x.time};
 });
 if(localStorage.getItem(this.localKey) != JSON.stringify(fresh) || this.first){
@@ -539,15 +553,20 @@ localStorage.setItem(this.localKey,JSON.stringify(arr));
 getLocal() {
 return JSON.parse(localStorage.getItem(this.localKey)||'[]');
 }
+emojify(t) {
+return t.replace(/:([A-Za-z0-9_-]+):/g, (_, id) =>
+`<span class="emoji"><img src="https://e.alimad.co/${id}"></span>`
+);
+}
 render() {
 const c = document.getElementById('commentsContainer');
 c.innerHTML = '';
 this.getLocal().forEach(x=>{
 const d = document.createElement('div');
 d.className = 'comment';
-d.innerHTML = `<span class="username">${x.u}</span>
+d.innerHTML = `<span class="username">${this.emojify(x.u)}</span>
 <span class="timestamp">${this.ago(x.time)}</span>
-<div class="text">${x.t}</div>`;
+<div class="text">${this.emojify(x.t)}</div>`;
 c.appendChild(d);
 });
 c.scrollTo({ top: c.scrollHeight, behavior: 'smooth' });
