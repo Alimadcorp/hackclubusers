@@ -15,7 +15,7 @@
 <style>
 @font-face {
 font-family: 'Geist';
-src: url('https://corsproxy.io/?url=https://cdn.alimad.co/f/geist.woff2') format('woff2');
+src: url('https://corsproxy.io/?url=https://cdn.alimad.co/f/GeistMono.woff2') format('woff2');
 font-weight: normal;
 font-style: normal;
 font-display: swap;
@@ -49,7 +49,7 @@ margin-bottom: 30px;
 }
 h1 {
 color: var(--secondary);
-font-size: 2.5rem;
+font-size: 40px;
 margin-bottom: 10px;
 font-weight: 700;
 }
@@ -358,6 +358,7 @@ textarea {height: 80px;}
 a {
 text-decoration: none;
 color: var(--primary);
+text-decoration-color: white;
 }
 a:hover {
 text-decoration: underline;
@@ -412,7 +413,7 @@ Loading...
 </section>
 <div class="last-sync" id="lastSync"></div>
 <div class="footer">
-Made with 🤍 by Muhammad Ali
+Made with <a href="https://heart.alimad.co">🤍</a> by Muhammad Ali
 </div>
 <script>
 async function main() {
@@ -437,35 +438,33 @@ return `
 ${emojiUrl ? `<img src="${emojiUrl}" alt="${emojiKey}" class="emoji-img">`: ''}
 ${emojiKey.toLowerCase()}
 </td>
-<td>${v}</td>
+<td>${v.toLocaleString()}</td>
 </tr>
 `;
 }
-return `<tr><td class="rank">#${i+1}</td><td style=color:${c ? "#" + k + ";font-weight:700" : "#fff"};>${k}</td><td>${v}</td></tr>`;
+return `<tr><td class="rank">#${i+1}</td><td style=color:${c ? "#" + k + ";font-weight:700" : "#fff"};>${k}</td><td>${v.toLocaleString()}</td></tr>`;
 }).join('');
 return `<div class="table-container"><table><thead><tr><th>Rank</th><th>${keyLabel}</th><th>${valueLabel}</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 };
 const sections = [
 addSection('General Stats',
-`
-<table>
+`<table>
 <tbody>
-<tr><td>Total Users</td><td>${data.sum}</td></tr>
-<tr><td>Active Users</td><td>${data.active_users}</td></tr>
-<tr><td>Guest Users</td><td>${data.guests}</td></tr>
-<tr><td>Bots</td><td>${data.bots}</td></tr>
-<tr><td>Banned Users</td><td>${data.banned}</td></tr>
-<tr><td>Deleted Users</td><td>${data.deleted}</td></tr>
-<tr><td>Set Statuses</td><td>${data.set_status}</td></tr>
-<tr><td>Emails Verified</td><td>${data.emails}</td></tr>
-<tr><td>Phone Numbers</td><td>${data.phone}</td></tr>
-<tr><td>Skype Accounts</td><td>${data.skype}</td></tr>
-<tr><td>Titles</td><td>${data.title}</td></tr>
-<tr><td>Channels</td><td>${data.channels}</td></tr>
-<tr><td>Emojis</td><td>${data.emoji}</td></tr>
+<tr><td>Total Users</td><td>${data.sum.toLocaleString()}</td></tr>
+<tr><td>Active Users</td><td>${data.active_users.toLocaleString()}</td></tr>
+<tr><td>Guest Users</td><td>${data.guests.toLocaleString()}</td></tr>
+<tr><td>Bots</td><td>${data.bots.toLocaleString()}</td></tr>
+<tr><td>Banned Users</td><td>${data.banned.toLocaleString()}</td></tr>
+<tr><td>Deleted Users</td><td>${data.deleted.toLocaleString()}</td></tr>
+<tr><td>Set Statuses</td><td>${data.set_status.toLocaleString()}</td></tr>
+<tr><td>Emails Verified</td><td>${data.emails.toLocaleString()}</td></tr>
+<tr><td>Phone Numbers</td><td>${data.phone.toLocaleString()}</td></tr>
+<tr><td>Skype Accounts</td><td>${data.skype.toLocaleString()}</td></tr>
+<tr><td>Titles</td><td>${data.title.toLocaleString()}</td></tr>
+<tr><td>Channels</td><td>${data.channels.toLocaleString()}</td></tr>
+<tr><td>Emojis</td><td>${data.emoji.toLocaleString()}</td></tr>
 </tbody>
-</table>
-`),
+</table>`),
 addSection('Pronouns Used',
 makeTable(Object.entries(data.prons), "Pronoun", "Count", false, 12)),
 addSection('Top Timezones',
