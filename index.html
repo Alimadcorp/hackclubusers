@@ -355,6 +355,13 @@ height: 1.35em;
 width: auto;
 vertical-align: -0.35em;
 }
+#emoji-timeline-widget { background:#0b1118; color:white; font-family:sans-serif; padding:14px; border-radius:10px; }
+#etw-title { text-align:center; margin:4px 0 8px; font-weight:600; }
+#etw-canvas { width:100% !important; height:68vh !important; }
+#etw-legend { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:8px; padding:6px; }
+#etw-legend .etw-item { display:flex; align-items:center; cursor:pointer; opacity:1; transition:opacity .2s; }
+#etw-legend .etw-item img { width:24px; height:24px; margin-right:5px; border-radius:4px; }
+#etw-legend .etw-item.hidden { opacity:0.35; }
 </style>
 </head>
 <body>
@@ -374,6 +381,10 @@ Loading...
 <div id="content">
 Loading...
 </div>
+<div id="emoji-timeline-widget">
+<canvas id="etw-canvas"></canvas>
+<div id="etw-legend"></div></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <h1>Comments</h1>
 <section class="comment-section">
 <div class="username-section">
@@ -641,6 +652,99 @@ nameEl.value = localStorage.getItem('username')||'Anonymous';
 nameEl.oninput=()=>{
 localStorage.setItem('username', nameEl.value.trim()||'Anonymous');
 };
+const ETW_API = "https://api.hackclub.alimad.co/api/stats";
+const ETW_EMOJI = {
+Eyes:"https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-medium/1f440.png",
+Fire:"https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-medium/1f525.png",
+Sparkling_Heart:"https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-large/1f496.png"
+};
+function etwImg(id){ return ETW_EMOJI[id]||`https://e.alimad.co/${id}`; }
+function parseDateInput(ts){
+if (!ts && ts !== 0) return null;
+let spl = ts.split?.(/[T]/);
+spl[1] = spl[1].replaceAll("-", ":");
+ts = spl.join("T");
+return new Date(ts);
+}
+function formatShort(ts){
+const d = parseDateInput(ts);
+console.log(d);
+if (!d) return ts;
+const opts = { month:"short", day:"numeric" };
+if (d.getFullYear() !== new Date().getFullYear()) opts.year = "numeric";
+return d.toLocaleDateString(undefined, opts);
+}
+function formatLong(ts){
+const d = parseDateInput(ts);
+if (!d) return ts;
+return d.toLocaleString();
+}
+(async()=>{
+const res = await fetch(ETW_API);
+const json = await res.json();
+const merged = json.merged || {};
+const timestamps = Object.keys(merged).sort();
+const map = {};
+timestamps.forEach(t=>{ for(const id in merged[t]){ (map[id] ??= {})[t] = merged[t][id]; }});
+timestamps.forEach(t=>{ for(const id in map){ if (map[id][t] == null) map[id][t] = 0; }});
+const top = Object.entries(map)
+.map(([id, rows]) => [id, timestamps.reduce((a,t)=>a+rows[t], 0)])
+.sort((a,b)=>b[1]-a[1])
+.slice(0,10);
+const palette = i => `hsl(${(i*47)%360} 78% 60%)`;
+const datasets = top.map(([id], i) => ({
+label: id,
+data: timestamps.map(t => map[id][t]),
+borderColor: palette(i),
+backgroundColor: palette(i),
+borderWidth: 2,
+pointRadius: 3,
+pointHoverRadius: 6,
+hitRadius: 8,
+tension: 0.35
+}));
+const labelsShort = timestamps.map(formatShort);
+const ctx = document.getElementById("etw-canvas");
+const chart = new Chart(ctx, {
+type: "line",
+data: { labels: labelsShort, datasets: datasets },
+options: {
+responsive: true,
+maintainAspectRatio: false,
+interaction: { mode: "nearest", intersect: false },
+plugins: {
+legend: { display: false },
+tooltip: {
+callbacks: {
+title(items){
+const idx = items?.[0]?.dataIndex;
+return idx != null ? formatLong(timestamps[idx]) : "";
+},
+label(item){ return `${item.dataset.label}: ${item.formattedValue}`; }
+}
+}
+},
+scales: {
+x: { ticks: { color: "white", maxRotation: 0, autoSkip: true, maxTicksLimit: 10 } },
+y: { ticks: { color: "white" } }
+}
+}
+});
+const legend = document.getElementById("etw-legend");
+legend.innerHTML = datasets.map(d=>`
+<div class="etw-item" data-id="${d.label}" style="color:${d.borderColor}">
+<img src="${etwImg(d.label)}">${d.label}
+</div>`).join("");
+legend.querySelectorAll(".etw-item").forEach(el=>{
+el.onclick = ()=>{
+const id = el.dataset.id;
+const ds = chart.data.datasets.find(x=>x.label===id);
+ds.hidden = !ds.hidden;
+el.classList.toggle("hidden", ds.hidden);
+chart.update();
+};
+});
+})();
 </script>
 </body>
 </html>
