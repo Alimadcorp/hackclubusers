@@ -510,83 +510,125 @@ ${user.skype ? `<p><strong>Skype:</strong> <span>${user.skype}</span></p>`: ''}
 main();
 loadUser();
 class MadlogAPI {
-constructor(channel='all') {
-this.channel = channel;
-this.apiUrl = 'https://madlog.vercel.app/api';
-this.first = true;
-this.localKey = `comments-${channel}`;
-this.refresh();
-setInterval(()=>this.refresh(),10000);
-}
-async logComment(comment) {
-const username = localStorage.getItem('username') || 'Anonymous';
-const text = `${username}:::${comment.trim()}`;
-const url = `${this.apiUrl}/log?text=${encodeURIComponent(text)}&channel=${this.channel}&country=O&status=log`;
-this.addLocal(username, comment);
-this.render();
-fetch(url).catch(()=>this.addSystem('Failed to sync to server'));
-}
-sane(input) {
-if (input === null || input === undefined) return '';
-const s = String(input);
-return s.replace(/[&<>"'`]/g, ch => ({
-'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;'
-}[ch]));
-}
-async refresh() {
-const url = `${this.apiUrl}/pull?channel=${this.channel}`;
-try {
-const r = await fetch(url);
-const b = await r.json();
-const fresh = b.logs.map(x=>{
-const re = /^((?:[^:]+|:[A-Za-z0-9_-]+:)+?):::(.*)$/;
-const m = this.sane(x.text).match(re);
-const u = m ? m[1] : '';
-const t = m ? m[2] : '';
-return {u:u||'Anonymous',t:t,time:x.time};
-});
-if(localStorage.getItem(this.localKey) != JSON.stringify(fresh) || this.first){
-localStorage.setItem(this.localKey, JSON.stringify(fresh));
-this.render();
-this.first = false;
-}
-} catch(e) { this.addSystem(e.toString()); }
-}
-addLocal(u,t) {
-const arr = this.getLocal();
-arr.push({u,t,time:new Date().toISOString()});
-localStorage.setItem(this.localKey,JSON.stringify(arr));
-}
-getLocal() {
-return JSON.parse(localStorage.getItem(this.localKey)||'[]');
-}
-emojify(t) {
-return t.replace(/:([A-Za-z0-9_-]+):/g, (_, id) =>
-`<span class="emoji"><img src="https://e.alimad.co/${id.replaceAll("\"", "'")}"></span>`
-);
-}
-render() {
-const c = document.getElementById('commentsContainer');
-c.innerHTML = '';
-this.getLocal().forEach(x=>{
-const d = document.createElement('div');
-d.className = 'comment';
-d.classList.add(x.u.startsWith("Alimad Co") ? 'alimad' : 'random');
-d.classList.add(x.u.toLowerCase().startsWith("alvina") ? 'alvina' : 'random');
-d.innerHTML = `<span class="username${x.u.startsWith("Alimad Co") ? ' alimad' : ''}${x.u.toLowerCase().startsWith("alvina") ? ' alvina' : ''}">${this.emojify(x.u)}</span>
-<span class="timestamp">${this.ago(x.time)}</span>
-<div class="text">${this.emojify(x.t)}</div>`;
-c.appendChild(d);
-});
-c.scrollTo({ top: c.scrollHeight, behavior: 'smooth' });
-}
-addSystem(msg) {
-const c = document.getElementById('commentsContainer');
-const d = document.createElement('div');
-d.className = 'system-message';
-d.textContent = msg;
-c.appendChild(d);
-}
+  constructor(channel = 'all') {
+    this.channel = channel;
+    this.apiUrl = 'https://madlog.vercel.app/api';
+    this.localKey = `comments-${channel}`;
+    this.first = true;
+    this.refresh();
+    setInterval(() => this.refresh(), 10000);
+  }
+
+  async logComment(comment) {
+    const username = localStorage.getItem('username') || 'Anonymous';
+    const text = `${username}:::${comment.trim()}`;
+    const url = `${this.apiUrl}/log?text=${encodeURIComponent(text)}&channel=${this.channel}&country=O&status=log`;
+    this.refresh();
+    fetch(url).catch(() => this.addSystem('Failed to sync to server'));
+  }
+
+  sane(input) {
+    if (input == null) return '';
+    return String(input).replace(/[&<>"'`]/g, ch => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;',
+      '"': '&quot;', "'": '&#39;', '`': '&#96;'
+    }[ch]));
+  }
+
+  async refresh() {
+    try {
+      const r = await fetch(`${this.apiUrl}/pull?channel=${this.channel}`);
+      const b = await r.json();
+      const fresh = b.logs.map(x => {
+        const m = this.sane(x.text).match(/^(.*?):::(.*)$/);
+        return {
+          u: m?.[1] || 'Anonymous',
+          t: m?.[2] || '',
+          time: x.time
+        };
+      });
+      if (localStorage.getItem(this.localKey) !== JSON.stringify(fresh) || this.first) {
+        localStorage.setItem(this.localKey, JSON.stringify(fresh));
+        this.render();
+        this.first = false;
+      }
+    } catch (err) {
+      this.addSystem('Error: ' + err);
+    }
+  }
+
+  getLocal() {
+    return JSON.parse(localStorage.getItem(this.localKey) || '[]');
+  }
+
+  emojify(container, text) {
+    const parts = text.split(/(:[A-Za-z0-9_-]+:)/g);
+    parts.forEach(p => {
+      if (/^:[A-Za-z0-9_-]+:$/.test(p)) {
+        const id = p.slice(1, -1);
+        const img = document.createElement('img');
+        img.src = `https://e.alimad.co/${id}`;
+        img.classList.add('emoji');
+        container.appendChild(img);
+      } else {
+        const span = document.createElement('span');
+        span.textContent = p;
+        container.appendChild(span);
+      }
+    });
+  }
+
+  ago(t) {
+    const s = Math.floor((Date.now() - new Date(t)) / 1000);
+    if (s < 60) return s + 's ago';
+    const m = Math.floor(s / 60); if (m < 60) return m + 'm ago';
+    const h = Math.floor(m / 60); if (h < 24) return h + 'h ago';
+    const d = Math.floor(h / 24); if (d < 7) return d + 'd ago';
+    return new Date(t).toLocaleDateString();
+  }
+
+  render() {
+    const c = document.getElementById('commentsContainer');
+    if (!c) return;
+    c.textContent = '';
+
+    this.getLocal().forEach(x => {
+      const d = document.createElement('div');
+      d.classList.add('comment');
+
+      if (x.u.startsWith('Alimad Co')) d.classList.add('alimad');
+      if (x.u.toLowerCase().startsWith('alvina')) d.classList.add('alvina');
+
+      const u = document.createElement('span');
+      u.classList.add('username');
+      this.emojify(u, x.u);
+
+      const tm = document.createElement('span');
+      tm.classList.add('timestamp');
+      tm.textContent = this.ago(x.time);
+
+      const tx = document.createElement('div');
+      tx.classList.add('text');
+      this.emojify(tx, x.t);
+
+      d.appendChild(u);
+      d.appendChild(tm);
+      d.appendChild(tx);
+      c.appendChild(d);
+    });
+
+    c.scrollTo({ top: c.scrollHeight, behavior: 'smooth' });
+  }
+
+  addSystem(msg) {
+    const c = document.getElementById('commentsContainer');
+    if (!c) return;
+    const d = document.createElement('div');
+    d.classList.add('system-message');
+    d.textContent = msg;
+    c.appendChild(d);
+  }
+                               }
 ago(t) {
 const date = new Date(t);
 const now = new Date();
