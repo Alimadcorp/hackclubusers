@@ -562,7 +562,7 @@ return JSON.parse(localStorage.getItem(this.localKey)||'[]');
 }
 emojify(t) {
 return t.replace(/:([A-Za-z0-9_-]+):/g, (_, id) =>
-`<span class="emoji"><img src="https://e.alimad.co/${id}"></span>`
+`<span class="emoji"><img src="https://e.alimad.co/${id.replaceAll("\"", "'")}"></span>`
 );
 }
 render() {
