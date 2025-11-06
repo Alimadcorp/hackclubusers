@@ -546,7 +546,7 @@ setInterval(() => this.refresh(), 10000);
 }
 async logComment(comment) {
 const username = localStorage.getItem('username') || 'Anonymous';
-const text = `${btoa(unescape(username))}:::${btoa(unescape(comment.trim()))}`;
+const text = `${btoa(escape(username))}:::${btoa(escape(comment.trim()))}`;
 const url = `${this.apiUrl}/log?text=${encodeURIComponent(text)}&channel=${this.channel}&country=O&status=log`;
 await fetch(url).catch(() => this.addSystem('Failed to upload comment'));
 document.getElementById('submitComment').disabled=false;
@@ -555,7 +555,7 @@ this.refresh();
 sane(input) {
 let r;
 try{
-r = atob(escape(input));
+r = unescape(atob(input));
 return r;
 }catch(e){
 return false;
@@ -676,7 +676,7 @@ const y = Math.floor(mo / 12);
 return (sameYear ? date.toLocaleDateString([], { day: 'numeric', month: 'short' }) : dateStr);
 }
 }
-let madlog = new MadlogAPI('slackhackchatnew');
+let madlog = new MadlogAPI('slackhackchatx');
 document.getElementById('submitComment').onclick=()=>{
 const el = document.getElementById('comment');
 const v = el.value.trim();
