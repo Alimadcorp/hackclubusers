@@ -546,7 +546,7 @@ setInterval(() => this.refresh(), 10000);
 }
 async logComment(comment) {
 const username = localStorage.getItem('username') || 'Anonymous';
-const text = `${btoa(username)}:::${btoa(comment.trim())}`;
+const text = `${btoa(unescape(username))}:::${btoa(unescape(comment.trim()))}`;
 const url = `${this.apiUrl}/log?text=${encodeURIComponent(text)}&channel=${this.channel}&country=O&status=log`;
 await fetch(url).catch(() => this.addSystem('Failed to upload comment'));
 document.getElementById('submitComment').disabled=false;
@@ -555,7 +555,7 @@ this.refresh();
 sane(input) {
 let r;
 try{
-r = atob(input);
+r = atob(escape(input));
 return r;
 }catch(e){
 return false;
