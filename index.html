@@ -16,7 +16,7 @@
 @font-face {
 font-family: 'Geist';
 src: url('https://corsproxy.io/?url=https://cdn.alimad.co/f/GeistMono.woff2') format('woff2');
-font-weight: normal;
+font-weight: normal, bold, bolder, light, lighter;
 font-style: normal;
 font-display: swap;
 }
@@ -51,7 +51,7 @@ h1 {
 color: var(--secondary);
 font-size: 40px;
 margin-bottom: 10px;
-font-weight: 700;
+font-weight: bolder;
 }
 .subtitle {
 color: var(--text-light);
@@ -141,7 +141,7 @@ color: var(--primary);
 font-size: 1.5rem;
 margin-top: 0;
 margin-bottom: 20px;
-font-weight: 600;
+font-weight: bold;
 }
 .table-container {
 width: 100%;
@@ -165,7 +165,7 @@ text-align: left;
 th {
 background-color: rgba(31, 111, 235, 0.1);
 color: var(--primary);
-font-weight: 500;
+font-weight: bold;
 }
 tr:nth-child(even) {
 background-color: rgba(13, 17, 23, 0.5);
@@ -184,7 +184,7 @@ height: 24px;
 object-fit: contain;
 }
 .rank {
-font-weight: 600;
+font-weight: bold;
 color: var(--primary);
 }
 .average-color {
@@ -229,7 +229,7 @@ height: 100px;
 }
 .comment-section {
 width: 100%;
-max-width: 600px;
+max-width: 700px;
 margin: 0 auto;
 background-color: black;
 padding: 20px;
@@ -265,7 +265,7 @@ background-color: #45a049;
 display: flex;
 flex-direction: column;
 gap: 12px;
-max-width: 600px;
+max-width: 700px;
 margin: 0 auto;
 }
 input,
@@ -338,21 +338,21 @@ background: #202020;
 }
 .comment .username {
 word-wrap: break-word;
-font-weight: 600;
+font-weight: bold;
 color: #b9ff57;
 font-size: 13px;
 }
 .comment.alimad {
 border-left: 5px solid #299bff;
 }
-.comment .username.alimad {
-color: #299bff; font-weight: bold;
+.comment.alimad .username {
+color: #299bff; font-weight: bolder;
 }
 .comment.alvina {
 border-left: 5px solid #e357ff;
 }
-.comment .username.alvina {
-color: #e357ff; font-weight: bold;
+.comment.alvina .username {
+color: #e357ff; font-weight: bolder;
 }
 .comment .timestamp {
 float: right;
@@ -376,6 +376,20 @@ border-radius: 6px;
 margin-bottom: 8px;
 font-size: 12px;
 }
+.emoji-pill {
+display: inline-block;
+margin-left: 1px;
+padding: 1px 5px;
+border-radius: 10px;
+border: 1px solid transparent;
+background: #444;
+color: #fff;
+font-size: .8em;
+}
+.emoji-pill:hover{
+border: 1px solid #444;
+background: #222;
+}
 @media(max-width: 600px) {
 textarea {height: 80px;}
 .comment .text {font-size: 13px; word-wrap: break-word;}
@@ -395,7 +409,7 @@ width: auto;
 vertical-align: -0.35em;
 }
 #emoji-timeline-widget { background:#0b1118; color:white; font-family:sans-serif; padding:14px; border-radius:10px; }
-#etw-title { text-align:center; margin:4px 0 8px; font-weight:600; }
+#etw-title { text-align:center; margin:4px 0 8px; font-weight:bold; }
 #etw-canvas { width:100% !important; height:68vh !important; }
 #etw-legend { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:8px; padding:6px; }
 #etw-legend .etw-item { display:flex; align-items:center; cursor:pointer; opacity:1; transition:opacity .2s; }
@@ -468,7 +482,7 @@ ${emojiKey.toLowerCase()}
 </tr>
 `;
 }
-return `<tr><td class="rank">#${i+1}</td><td style=color:${c ? "#" + k + ";font-weight:700" : "#fff"};>${k}</td><td>${v.toLocaleString()}</td></tr>`;
+return `<tr><td class="rank">#${i+1}</td><td style=color:${c ? "#" + k + ";font-weight:bold" : "#fff"};>${k}</td><td>${v.toLocaleString()}</td></tr>`;
 }).join('');
 return `<div class="table-container"><table><thead><tr><th>Rank</th><th>${keyLabel}</th><th>${valueLabel}</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 };
@@ -589,19 +603,24 @@ this.addSystem('Error: ' + err);
 getLocal() {
 return JSON.parse(localStorage.getItem(this.localKey) || '[]');
 }
-emojify(container, text) {
-const parts = text.split(/(:[A-Za-z0-9_-]+:)/g);
-parts.forEach(p => {
+emojify(c, t) {
+t.split(/(:[A-Za-z0-9_-]+:)/g).forEach(p => {
 if (/^:[A-Za-z0-9_-]+:$/.test(p)) {
 const id = p.slice(1, -1);
 const img = document.createElement('img');
 img.src = `https://e.alimad.co/${id}`;
 img.classList.add('emoji');
-container.appendChild(img);
+img.onerror = () => {
+const pill = document.createElement('span');
+pill.textContent = `:${id}:`;
+pill.className = 'emoji-pill';
+img.replaceWith(pill);
+};
+c.appendChild(img);
 } else {
-const span = document.createElement('span');
-span.textContent = p;
-container.appendChild(span);
+const s = document.createElement('span');
+s.textContent = p;
+c.appendChild(s);
 }
 });
 }
