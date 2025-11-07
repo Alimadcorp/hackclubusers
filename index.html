@@ -42,6 +42,7 @@ margin: 0 auto;
 font-family: "Geist", sans-serif;
 scrollbar-width: thin;
 scrollbar-color: #fff2 transparent;
+user-select: none;
 }
 header {
 text-align: center;
@@ -800,13 +801,22 @@ legend.innerHTML = datasets.map(d=>`
 <img src="${etwImg(d.label)}">${d.label}
 </div>`).join("");
 legend.querySelectorAll(".etw-item").forEach(el=>{
-el.onclick = ()=>{
-const id = el.dataset.id;
-const ds = chart.data.datasets.find(x=>x.label===id);
-ds.hidden = !ds.hidden;
-el.classList.toggle("hidden", ds.hidden);
-chart.update();
-};
+el.onclick = e => {
+const id = el.dataset.id
+const ds = chart.data.datasets.find(x => x.label === id)
+if (e.shiftKey) {
+chart.data.datasets.forEach(x => {
+x.hidden = x.label !== id
+})
+document.querySelectorAll("[data-id]").forEach(btn => {
+btn.classList.toggle("hidden", btn.dataset.id !== id)
+})
+} else {
+ds.hidden = !ds.hidden
+el.classList.toggle("hidden", ds.hidden)
+}
+chart.update()
+}
 });
 })();
 (function() {
